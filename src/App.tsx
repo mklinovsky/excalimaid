@@ -1,12 +1,7 @@
-import { Excalidraw } from "@excalidraw/excalidraw";
-import "@excalidraw/excalidraw/index.css";
+import { MermaidExcalidraw } from "./components/MermaidExcalidraw";
 
 function App() {
-  return (
-    <div style={{ height: "100vh", width: "100vw" }}>
-      <Excalidraw />
-    </div>
-  )
+  return <MermaidExcalidraw />;
 }
 
-export default App
+export default App;
