@@ -1,7 +1,7 @@
 {
   "name": "excalimaid",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage",
+    "diagram": "node scripts/open-diagram.ts"
   },
   "dependencies": {
     "@excalidraw/excalidraw": "^0.18.0",

@@ -6,7 +6,7 @@ export interface ConvertOptions {
   fontSize?: string;
 }
 
-const DEFAULT_FONT_SIZE = "25px";
+const DEFAULT_FONT_SIZE = "16px";
 
 export async function convertMermaidToExcalidraw(
   mermaidDiagram: string,

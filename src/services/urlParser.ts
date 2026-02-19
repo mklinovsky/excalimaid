@@ -1,17 +1,9 @@
-/**
- * Get URL search param value
- */
-export function getUrlParam(paramName: string, searchString?: string): string | null {
-  const search = searchString ?? (typeof window !== 'undefined' ? window.location.search : '');
-  const params = new URLSearchParams(search);
+function getUrlParam(paramName: string): string | null {
+  const params = new URLSearchParams(window.location.search);
   return params.get(paramName);
 }
 
-/**
- * Decode Base64 to UTF-8 string
- * Returns null if decoding fails
- */
-export function decodeBase64(encoded: string): string | null {
+function decodeBase64(encoded: string): string | null {
   if (!encoded) {
     return null;
   }
@@ -23,15 +15,11 @@ export function decodeBase64(encoded: string): string | null {
   }
 }
 
-/**
- * Get and decode Mermaid diagram from URL
- * Combines getUrlParam and decodeBase64
- */
-export function getMermaidFromUrl(searchString?: string): string | null {
-  const encoded = getUrlParam('mermaid', searchString);
-  
+export function getMermaidFromUrl(): string | null {
+  const encoded = getUrlParam("mermaid");
+
   if (!encoded) {
-    return null;
+    throw new Error("Error while encoding the url params.");
   }
 
   return decodeBase64(encoded);

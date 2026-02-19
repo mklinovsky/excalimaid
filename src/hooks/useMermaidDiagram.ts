@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { getMermaidFromUrl } from "../services/urlParser";
 import { convertMermaidToExcalidraw } from "../services/mermaidConverter";
-import { getErrorDiagramSyntax } from "../services/errorDiagram";
 import type {
   ExcalidrawElements,
   UseMermaidDiagramResult,
@@ -15,36 +14,17 @@ export function useMermaidDiagram(): UseMermaidDiagramResult {
     let isMounted = true;
 
     async function loadDiagram() {
-      console.log("loading diagram");
       try {
         const mermaidSyntax = getMermaidFromUrl();
-        console.log(mermaidSyntax, mermaidSyntax);
-        let syntaxToConvert: string;
-        let errorType: "missing" | "parse-error" | undefined;
+        const result = await convertMermaidToExcalidraw(mermaidSyntax ?? "");
 
-        if (!mermaidSyntax) {
-          syntaxToConvert = getErrorDiagramSyntax("missing");
-          errorType = "missing";
-        } else {
-          syntaxToConvert = mermaidSyntax;
+        if (result.error) {
+          console.error(result.error);
         }
 
-        const result = await convertMermaidToExcalidraw(syntaxToConvert);
-        console.log(result);
-
-        if (result.error && !errorType) {
-          const errorSyntax = getErrorDiagramSyntax("parse-error");
-          const errorResult = await convertMermaidToExcalidraw(errorSyntax);
-
-          if (isMounted) {
-            setElements(errorResult.excalidrawElements);
-            setError(result.error);
-          }
-        } else {
-          if (isMounted) {
-            setElements(result.excalidrawElements);
-            setError(errorType ? null : null);
-          }
+        if (isMounted) {
+          setElements(result.excalidrawElements);
+          setError(result.error ?? null);
         }
       } catch (err) {
         if (isMounted) {
