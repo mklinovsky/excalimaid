@@ -4,7 +4,7 @@ import { convertMermaidToExcalidraw } from "../services/mermaidConverter";
 import type {
   ExcalidrawElements,
   UseMermaidDiagramResult,
-} from "../types/mermaid.types";
+} from "../services/mermaid.types";
 
 export function useMermaidDiagram(): UseMermaidDiagramResult {
   const [elements, setElements] = useState<ExcalidrawElements | null>(null);

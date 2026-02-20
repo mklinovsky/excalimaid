@@ -1,23 +1,14 @@
 import { parseMermaidToExcalidraw } from "@excalidraw/mermaid-to-excalidraw";
 import { convertToExcalidrawElements } from "@excalidraw/excalidraw";
-import type { ExcalidrawElements } from "../types/mermaid.types";
-
-export interface ConvertOptions {
-  fontSize?: string;
-}
+import type { ExcalidrawElements } from "./mermaid.types";
 
 const DEFAULT_FONT_SIZE = "16px";
 
-export async function convertMermaidToExcalidraw(
-  mermaidDiagram: string,
-  options?: ConvertOptions,
-) {
-  const fontSize = options?.fontSize ?? DEFAULT_FONT_SIZE;
-
+export async function convertMermaidToExcalidraw(mermaidDiagram: string) {
   try {
     const { elements } = await parseMermaidToExcalidraw(mermaidDiagram, {
       themeVariables: {
-        fontSize,
+        fontSize: DEFAULT_FONT_SIZE,
       },
     });
 
