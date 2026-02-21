@@ -1,26 +1,23 @@
 function getUrlParam(paramName: string): string | null {
-  const params = new URLSearchParams(window.location.search);
-  return params.get(paramName);
-}
-
-function decodeBase64(encoded: string): string | null {
-  if (!encoded) {
-    return null;
+  const params = window.location.search;
+  if (!params) {
+    throw new Error("Empty query params.");
   }
 
-  try {
-    return atob(encoded);
-  } catch {
-    return null;
+  if (!paramName) {
+    throw new Error('Missing "mermaid" query param.');
   }
+
+  const urlParams = new URLSearchParams(params);
+  return urlParams.get(paramName);
 }
 
-export function getMermaidFromUrl(): string | null {
+export function getMermaidFromUrl(): string {
   const encoded = getUrlParam("mermaid");
 
   if (!encoded) {
-    throw new Error("Error while encoding the url params.");
+    throw new Error('Error getting the "mermaid" query param.');
   }
 
-  return decodeBase64(encoded);
+  return atob(encoded) ?? "";
 }

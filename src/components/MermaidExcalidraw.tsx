@@ -1,9 +1,11 @@
+import { useState, useEffect } from "react";
 import { Excalidraw } from "@excalidraw/excalidraw";
+import type { ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types";
 import "@excalidraw/excalidraw/index.css";
 import { useMermaidDiagram } from "../hooks/useMermaidDiagram";
 
 export function MermaidExcalidraw() {
-  const { elements } = useMermaidDiagram();
+  const { elements, error } = useMermaidDiagram();
 
   if (!elements) {
     return (
@@ -18,6 +20,7 @@ export function MermaidExcalidraw() {
       <Excalidraw
         initialData={{
           elements,
+          appState: {zenModeEnabled: true},
           scrollToContent: true,
         }}
       />

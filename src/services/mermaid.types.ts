@@ -4,5 +4,4 @@ export type ExcalidrawElements = OrderedExcalidrawElement[];
 
 export interface UseMermaidDiagramResult {
   elements: ExcalidrawElements | null;
-  error: string | null;
 }
