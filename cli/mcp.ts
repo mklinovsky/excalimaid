@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { ensureManagedServer, generateUrl, openBrowser } from "./server.ts";
+import { ensureManagedServer, generateUrl, openBrowser } from "./server.js";
 
 export async function runMcpServer() {
   const server = new McpServer({

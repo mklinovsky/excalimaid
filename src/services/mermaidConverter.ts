@@ -4,6 +4,7 @@ import type { ExcalidrawElements } from "./mermaid.types";
 import { getMermaidFromUrl } from "./urlParser";
 
 const DEFAULT_FONT_SIZE = 16;
+const NORD_RED = "#bf616a";
 
 function createErrorElements(message: string): ExcalidrawElements {
   return convertToExcalidrawElements([
@@ -12,8 +13,7 @@ function createErrorElements(message: string): ExcalidrawElements {
       x: 0,
       y: 0,
       text: `Error: ${message}`,
-      strokeColor: "#e03131",
-      autoResize: true,
+      strokeColor: NORD_RED,
     },
   ]);
 }

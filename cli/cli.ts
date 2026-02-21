@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { startSimpleServer, generateUrl, openBrowser } from "./server.ts";
-import { runMcpServer } from "./mcp.ts";
+import { startSimpleServer, generateUrl, openBrowser } from "./server.js";
+import { runMcpServer } from "./mcp.js";
 
 const HELP = `excalimaid - Open mermaid diagrams in Excalidraw
 
