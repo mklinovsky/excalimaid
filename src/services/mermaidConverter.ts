@@ -13,12 +13,16 @@ function createErrorElements(message: string): ExcalidrawElements {
       y: 0,
       text: `Error: ${message}`,
       strokeColor: "#e03131",
+      autoResize: true,
     },
   ]);
 }
 
 export async function convertMermaidToExcalidraw() {
   try {
+    // wait until excalifont is loaded, otherwise wrong text width is calculated
+    await document.fonts.ready;
+
     const mermaidSyntax = getMermaidFromUrl();
     const { elements } = await parseMermaidToExcalidraw(mermaidSyntax, {
       themeVariables: {

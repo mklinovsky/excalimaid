@@ -1,10 +1,20 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
 #root {
   width: 100vw;
   height: 100vh;
+}
+
+@font-face {
+  font-family: "Excalifont";
+  src: url("/fonts/Excalifont/Excalifont-Regular-a88b72a24fb54c9f94e3b5fdaa7481c9.woff2")
+    format("woff2");
+  font-display: block;
 }

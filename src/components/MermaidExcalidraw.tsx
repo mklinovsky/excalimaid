@@ -2,26 +2,29 @@ import { useState, useEffect } from "react";
 import { Excalidraw } from "@excalidraw/excalidraw";
 import type { ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types";
 import "@excalidraw/excalidraw/index.css";
-import { useMermaidDiagram } from "../hooks/useMermaidDiagram";
+import { convertMermaidToExcalidraw } from "../services/mermaidConverter";
 
 export function MermaidExcalidraw() {
-  const { elements, error } = useMermaidDiagram();
+  const [api, setApi] = useState<ExcalidrawImperativeAPI | null>(null);
 
-  if (!elements) {
-    return (
-      <div style={{ height: "100vh", width: "100vw", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        Loading...
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    convertMermaidToExcalidraw().then(({ excalidrawElements }) => {
+      api.updateScene({ elements: excalidrawElements });
+      api.scrollToContent(excalidrawElements);
+    });
+  }, [api]);
+
 
   return (
     <div style={{ height: "100vh", width: "100vw" }}>
       <Excalidraw
+        excalidrawAPI={(api) => setApi(api)}
         initialData={{
-          elements,
-          appState: {zenModeEnabled: true},
-          scrollToContent: true,
+          appState: { zenModeEnabled: true },
         }}
       />
     </div>
