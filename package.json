@@ -1,8 +1,16 @@
 {
   "name": "excalimaid",
-  "private": true,
   "version": "1.0.0",
+  "description": "Convert Mermaid diagrams to Excalidraw and open in browser. Includes MCP server for AI assistants.",
+  "license": "MIT",
+  "author": "Michal Klinovsky <michal.klinovsky@gmail.com>",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mklinovsky/excalimaid.git"
+  },
+  "keywords": ["mermaid", "excalidraw", "diagram", "mcp", "mcp-server"],
+  "files": ["cli/", "dist/", "README.md", "LICENSE"],
   "bin": {
     "excalimaid": "cli/cli.ts"
   },

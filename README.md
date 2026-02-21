@@ -1,26 +1,26 @@
 # Excalimaid
 
-Converts Mermaid diagrams into Excalidraw diagrams, serves them locally, and opens the result in your browser.
+Converts Mermaid diagrams into Excalidraw diagrams, serves them locally, and opens the result in your browser. Includes an MCP server for AI assistants.
 
 ## Requirements
 
 - Node.js >= 22.18
-- pnpm
 
-## Setup
+## Installation
 
 ```sh
-pnpm install
-pnpm build
-pnpm link --global
+npm install -g excalimaid
 ```
 
 ## Usage
 
-Pass a Mermaid string as an argument:
+### CLI
+
+Open a Mermaid diagram in Excalidraw:
 
 ```sh
-excalimaid "graph TD; A-->B; B-->C"
+excalimaid 'graph TD
+A-->B'
 ```
 
 Or pipe via stdin:
@@ -29,7 +29,89 @@ Or pipe via stdin:
 cat diagram.mmd | excalimaid
 ```
 
-## Tips
+### MCP Server
+
+Excalimaid provides an MCP server for AI assistants:
+
+```sh
+excalimaid mcp
+```
+
+**Tool: `open-diagram`**
+
+Opens a Mermaid diagram in Excalidraw:
+
+```json
+{
+  "name": "open-diagram",
+  "arguments": {
+    "mermaid": "graph TD\nA-->B"
+  }
+}
+```
+
+Starts a local HTTP server on port 17532, opens your browser, and returns the URL: `http://localhost:17532/?mermaid=...`
+
+The server auto-shuts down after 5 minutes of inactivity.
+
+#### MCP Setup
+
+Configure excalimaid in your MCP client:
+
+**OpenCode** (`opencode.json`):
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "excalimaid": {
+      "type": "local",
+      "command": ["npx", "excalimaid", "mcp"],
+      "enabled": true
+    }
+  }
+}
+```
+
+**Claude or Cursor** 
+```json
+{
+  "mcpServers": {
+    "excalimaid": {
+      "command": "npx",
+      "args": ["excalimaid", "mcp"]
+    }
+  }
+}
+```
+
+Once configured, the `open-diagram` tool will be available to your AI assistant.
+
+## Development
+
+Clone and setup for local development:
+
+```sh
+git clone https://github.com/mklinovsky/excalimaid.git
+cd excalimaid
+npm install
+npm run build
+```
+
+Link globally to use the local version:
+
+```sh
+npm link
+```
+
+Now you can run `excalimaid` from anywhere using your local build.
+
+For frontend development with hot reload:
+
+```sh
+npm run dev
+```
+
+## Tip
 
 Add to your `~/.zshrc` or `~/.bashrc` to open whatever Mermaid diagram is in your clipboard:
 
@@ -42,6 +124,6 @@ Then just copy a Mermaid diagram and run `mmd`.
 ## How it works
 
 1. The script base64-encodes the Mermaid syntax and passes it as a `?mermaid=` query parameter
-2. It serves the `dist/` directory via a minimal HTTP server
+2. It serves the `dist/` directory via a minimal HTTP server on port 17532
 3. The React app decodes the parameter and converts it to Excalidraw elements using `@excalidraw/mermaid-to-excalidraw`
 4. The result is rendered in a full-screen Excalidraw canvas
