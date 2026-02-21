@@ -1,5 +1,7 @@
 # Excalimaid
 
+[![npm version](https://img.shields.io/npm/v/excalimaid.svg)](https://www.npmjs.com/package/excalimaid)
+
 Converts Mermaid diagrams into Excalidraw diagrams, serves them locally, and opens the result in your browser. Includes an MCP server for AI assistants.
 
 ## Requirements
