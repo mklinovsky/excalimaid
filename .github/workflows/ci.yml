@@ -1,5 +1,8 @@
 name: ci
 
+env:
+  NODE_VERSION: 24
+
 on: push
 
 jobs:
@@ -8,13 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4
-        with: &pnpm-setup
+        with:
           version: 10
       - uses: actions/setup-node@v4
-        with: &node-setup
-          node-version: 24
+        with:
+          node-version: ${{ env.NODE_VERSION }}
           cache: "pnpm"
-          registry-url: "https://registry.npmjs.org/"
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
@@ -39,10 +41,10 @@ jobs:
       id-token: write
 
     steps:
-      - uses: pnpm/action-setup@v4
-        with: *pnpm-setup
       - uses: actions/setup-node@v4
-        with: *node-setup
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: "https://registry.npmjs.org/"
 
       - name: download build artifacts
         uses: actions/download-artifact@v4
@@ -50,5 +52,5 @@ jobs:
           name: build-dist
           path: .
 
-      - name: Publish to npm
-        run: pnpm publish --access public --provenance
+      - name: publish to npm
+        run: npm publish --access public --provenance
