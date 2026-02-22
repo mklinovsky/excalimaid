@@ -2,11 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/excalimaid.svg)](https://www.npmjs.com/package/excalimaid)
 
-Converts Mermaid diagrams into Excalidraw diagrams, serves them locally, and opens the result in your browser. Includes an MCP server for AI assistants.
-
-## Requirements
-
-- Node.js >= 22.18
+Converts Mermaid diagrams into Excalidraw diagrams, serves them locally, and opens the result in your browser. Includes an MCP server for AI assistants. All processing is done locally, no data is sent to external servers.
 
 ## Installation
 
@@ -95,14 +91,14 @@ Clone and setup for local development:
 ```sh
 git clone https://github.com/mklinovsky/excalimaid.git
 cd excalimaid
-npm install
-npm run build
+pnpm install
+pnpm run build
 ```
 
 Link globally to use the local version:
 
 ```sh
-npm link
+pnpm link --global
 ```
 
 Now you can run `excalimaid` from anywhere using your local build.
@@ -110,7 +106,7 @@ Now you can run `excalimaid` from anywhere using your local build.
 For frontend development with hot reload:
 
 ```sh
-npm run dev
+pnpm run dev
 ```
 
 ## Tip
