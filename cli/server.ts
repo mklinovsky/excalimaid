@@ -6,8 +6,8 @@ import { fileURLToPath } from "node:url";
 
 const PORT = 17532;
 const IDLE_TIMEOUT_MS = 5 * 60 * 1000;
-const DIST_DIR = path.resolve(fileURLToPath(import.meta.url), "../../web");
 const TIMEOUT_CHECK_INTERVAL_MS = 30 * 1000;
+const DIST_DIR = path.resolve(fileURLToPath(import.meta.url), "../../web");
 
 const MIME_TYPES: Record<string, string> = {
   ".html": "text/html",
@@ -82,7 +82,10 @@ export async function isServerRunning(): Promise<boolean> {
 }
 
 function startTimeoutCheck() {
-  if (timeoutCheckInterval) return;
+  if (timeoutCheckInterval) {
+    return;
+  }
+
   timeoutCheckInterval = setInterval(() => {
     if (Date.now() - lastRequestTime > IDLE_TIMEOUT_MS && managedServer) {
       clearInterval(timeoutCheckInterval!);

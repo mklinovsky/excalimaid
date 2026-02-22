@@ -27,6 +27,16 @@ Or pipe via stdin:
 cat diagram.mmd | excalimaid
 ```
 
+#### Tip
+
+Add to your `~/.zshrc` or `~/.bashrc` to open whatever Mermaid diagram is in your clipboard:
+
+```sh
+alias mmd='pbpaste | excalimaid'
+```
+
+Then just copy a Mermaid diagram and run `mmd`.
+
 ### MCP Server
 
 Excalimaid provides an MCP server for AI assistants:
@@ -37,7 +47,7 @@ excalimaid mcp
 
 **Tool: `open-diagram`**
 
-Opens a Mermaid diagram in Excalidraw:
+Opens a Mermaid diagram in Excalidraw. Supports Flowchart, Sequence, and Class diagrams.
 
 ```json
 {
@@ -63,7 +73,7 @@ Configure excalimaid in your MCP client:
   "mcp": {
     "excalimaid": {
       "type": "local",
-      "command": ["npx", "excalimaid", "mcp"],
+      "command": ["npx", "excalimaid@latest", "mcp"],
       "enabled": true
     }
   }
@@ -76,7 +86,7 @@ Configure excalimaid in your MCP client:
   "mcpServers": {
     "excalimaid": {
       "command": "npx",
-      "args": ["excalimaid", "mcp"]
+      "args": ["excalimaid@latest", "mcp"]
     }
   }
 }
@@ -108,16 +118,6 @@ For frontend development with hot reload:
 ```sh
 pnpm run dev
 ```
-
-## Tip
-
-Add to your `~/.zshrc` or `~/.bashrc` to open whatever Mermaid diagram is in your clipboard:
-
-```sh
-alias mmd='pbpaste | excalimaid'
-```
-
-Then just copy a Mermaid diagram and run `mmd`.
 
 ## How it works
 
