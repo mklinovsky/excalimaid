@@ -1,0 +1,54 @@
+name: ci
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with: &pnpm-setup
+          version: 10
+      - uses: actions/setup-node@v4
+        with: &node-setup
+          node-version: 24
+          cache: "pnpm"
+          registry-url: "https://registry.npmjs.org/"
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+
+      - name: upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-dist
+          path: |
+            dist/
+            package.json
+            pnpm-lock.yaml
+            README.md
+            LICENSE
+
+  publish:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - uses: pnpm/action-setup@v4
+        with: *pnpm-setup
+      - uses: actions/setup-node@v4
+        with: *node-setup
+
+      - name: download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-dist
+          path: .
+
+      - name: Publish to npm
+        run: pnpm publish --access public --provenance
