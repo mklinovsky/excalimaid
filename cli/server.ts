@@ -1,56 +1,24 @@
 import http from "node:http";
-import fs from "node:fs";
 import path from "node:path";
 import { exec } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { serveStatic } from "./static-server.js";
 
 const PORT = 17532;
 const IDLE_TIMEOUT_MS = 5 * 60 * 1000;
 const TIMEOUT_CHECK_INTERVAL_MS = 30 * 1000;
 const DIST_DIR = path.resolve(fileURLToPath(import.meta.url), "../../web");
 
-const MIME_TYPES: Record<string, string> = {
-  ".html": "text/html",
-  ".js": "application/javascript",
-  ".css": "text/css",
-  ".woff2": "font/woff2",
-};
-
-function serveStatic(req: http.IncomingMessage, res: http.ServerResponse) {
-  const reqPath = req.url?.split("?")[0] ?? "/";
-  const filePath = path.join(
-    DIST_DIR,
-    reqPath === "/" ? "index.html" : reqPath,
-  );
-
-  fs.readFile(filePath, (err, data) => {
-    if (err) {
-      fs.readFile(
-        path.join(DIST_DIR, "index.html"),
-        (fallbackErr, fallbackData) => {
-          if (fallbackErr) {
-            res.writeHead(500);
-            res.end("Internal Server Error");
-            return;
-          }
-          res.writeHead(200, { "Content-Type": "text/html" });
-          res.end(fallbackData);
-        },
-      );
-      return;
-    }
-
-    const ext = path.extname(filePath);
-    res.writeHead(200, {
-      "Content-Type": MIME_TYPES[ext] ?? "application/octet-stream",
-    });
-    res.end(data);
-  });
-}
-
 export function startSimpleServer(): Promise<void> {
   return new Promise((resolve, reject) => {
-    const server = http.createServer(serveStatic);
+    const server = http.createServer((req, res) => {
+      serveStatic(req, res, DIST_DIR).catch(() => {
+        if (!res.headersSent) {
+          res.writeHead(500);
+          res.end("Internal Server Error");
+        }
+      });
+    });
     server.on("error", reject);
     server.listen(PORT, resolve);
   });
@@ -88,8 +56,9 @@ function startTimeoutCheck() {
 
   timeoutCheckInterval = setInterval(() => {
     if (Date.now() - lastRequestTime > IDLE_TIMEOUT_MS && managedServer) {
-      clearInterval(timeoutCheckInterval!);
+      const interval = timeoutCheckInterval;
       timeoutCheckInterval = null;
+      clearInterval(interval ?? undefined);
       managedServer.close();
       managedServer = null;
     }
@@ -106,7 +75,12 @@ export function startManagedServer(): Promise<void> {
         res.end("ok");
         return;
       }
-      serveStatic(req, res);
+      serveStatic(req, res, DIST_DIR).catch(() => {
+        if (!res.headersSent) {
+          res.writeHead(500);
+          res.end("Internal Server Error");
+        }
+      });
     });
     managedServer.on("error", reject);
     managedServer.listen(PORT, () => {

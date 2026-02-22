@@ -26,7 +26,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && chmod +x dist/cli/cli.js"
+    "build": "tsc -b && vite build && chmod +x dist/cli/cli.js",
+    "test": "vitest run"
   },
   "dependencies": {
     "@excalidraw/excalidraw": "^0.18.0",
@@ -43,6 +44,7 @@
     "@vitejs/plugin-react": "^5.1.1",
     "typescript": "~5.9.3",
     "vite": "^7.3.1",
-    "vite-plugin-static-copy": "^3.2.0"
+    "vite-plugin-static-copy": "^3.2.0",
+    "vitest": "^4.0.18"
   }
 }
