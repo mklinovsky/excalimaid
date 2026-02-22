@@ -15,5 +15,5 @@ export function getMermaidFromUrl(): string {
     throw new Error('Missing or empty "mermaid" query param.');
   }
 
-  return atob(encoded) ?? "";
+  return encoded;
 }

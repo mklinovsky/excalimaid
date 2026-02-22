@@ -12,7 +12,7 @@ export async function runMcpServer() {
   server.registerTool(
     "open-diagram",
     {
-      description: "Open a Mermaid diagram in Excalidraw editor. Supports Flowchart, Sequence, and Class diagrams.",
+      description: "Open a Mermaid diagram in Excalidraw editor. Supports Flowchart, Sequence, and Class diagrams. Note: newlines in text labels are not supported and must be avoided.",
       inputSchema: {
         mermaid: z.string().describe("Mermaid diagram code"),
       },

@@ -97,7 +97,7 @@ export async function ensureManagedServer(): Promise<void> {
 }
 
 export function generateUrl(mermaid: string): string {
-  const encoded = encodeURIComponent(Buffer.from(mermaid).toString("base64"));
+  const encoded = encodeURIComponent(mermaid);
   return `http://localhost:${PORT}/?mermaid=${encoded}`;
 }
 
