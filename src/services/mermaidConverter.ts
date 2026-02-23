@@ -2,6 +2,7 @@ import { parseMermaidToExcalidraw } from "@excalidraw/mermaid-to-excalidraw";
 import { convertToExcalidrawElements } from "@excalidraw/excalidraw";
 import type { ExcalidrawElements } from "./mermaid.types";
 import { getMermaidFromUrl } from "./urlParser";
+import { loadExcalifont } from "./fontLoader";
 
 const DEFAULT_FONT_SIZE = 16;
 const NORD_RED = "#bf616a";
@@ -20,8 +21,8 @@ function createErrorElements(message: string): ExcalidrawElements {
 
 export async function convertMermaidToExcalidraw() {
   try {
-    // wait until excalifont is loaded, otherwise wrong text width is calculated
-    await document.fonts.ready;
+    // explicitly request Excalifont and wait for it to download before measuring text
+    await loadExcalifont();
 
     const mermaidSyntax = getMermaidFromUrl();
     const { elements } = await parseMermaidToExcalidraw(mermaidSyntax, {
