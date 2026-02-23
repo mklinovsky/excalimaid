@@ -21,12 +21,7 @@ export function MermaidExcalidraw() {
 
   return (
     <div style={{ height: "100vh", width: "100vw" }}>
-      <Excalidraw
-        excalidrawAPI={(api) => setApi(api)}
-        initialData={{
-          appState: { zenModeEnabled: true },
-        }}
-      />
+      <Excalidraw excalidrawAPI={(api) => setApi(api)} />
     </div>
   );
 }
