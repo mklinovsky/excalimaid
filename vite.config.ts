@@ -14,8 +14,8 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: "node_modules/@excalidraw/excalidraw/dist/prod/fonts",
-          dest: ".",
+          src: "node_modules/@excalidraw/excalidraw/dist/prod/fonts/!(Xiaolai)",
+          dest: "fonts",
         },
       ],
     }),
