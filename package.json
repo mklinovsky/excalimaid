@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@excalidraw/excalidraw": "^0.18.0",
-    "@excalidraw/mermaid-to-excalidraw": "^2.0.0",
+    "@excalidraw/mermaid-to-excalidraw": "^1.1.2",
     "@modelcontextprotocol/sdk": "^1.26.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
