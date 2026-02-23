@@ -73,7 +73,7 @@ Configure excalimaid in your MCP client:
   "mcp": {
     "excalimaid": {
       "type": "local",
-      "command": ["npx", "excalimaid@latest", "mcp"],
+      "command": ["npx", "-y", "excalimaid@latest", "mcp"],
       "enabled": true
     }
   }
@@ -86,7 +86,7 @@ Configure excalimaid in your MCP client:
   "mcpServers": {
     "excalimaid": {
       "command": "npx",
-      "args": ["excalimaid@latest", "mcp"]
+      "args": ["-y", "excalimaid@latest", "mcp"]
     }
   }
 }
