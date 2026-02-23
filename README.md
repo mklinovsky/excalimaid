@@ -94,6 +94,16 @@ Configure excalimaid in your MCP client:
 
 Once configured, the `open-diagram` tool will be available to your AI assistant.
 
+## How it works
+
+![How it works](.github/images/chart.png)
+*Made with the tool itself, obviously*
+
+1. The script base64-encodes the Mermaid syntax and passes it as a `?mermaid=` query parameter
+2. It serves the `dist/` directory via a minimal HTTP server on port 17532
+3. The React app decodes the parameter and converts it to Excalidraw elements using `@excalidraw/mermaid-to-excalidraw`
+4. The result is rendered in a full-screen Excalidraw canvas
+
 ## Development
 
 Clone and setup for local development:
@@ -112,16 +122,3 @@ pnpm link --global
 ```
 
 Now you can run `excalimaid` from anywhere using your local build.
-
-For frontend development with hot reload:
-
-```sh
-pnpm run dev
-```
-
-## How it works
-
-1. The script base64-encodes the Mermaid syntax and passes it as a `?mermaid=` query parameter
-2. It serves the `dist/` directory via a minimal HTTP server on port 17532
-3. The React app decodes the parameter and converts it to Excalidraw elements using `@excalidraw/mermaid-to-excalidraw`
-4. The result is rendered in a full-screen Excalidraw canvas
