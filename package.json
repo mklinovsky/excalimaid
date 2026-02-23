@@ -1,6 +1,6 @@
 {
   "name": "excalimaid",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Convert Mermaid diagrams to Excalidraw and open in browser. Includes MCP server for AI assistants.",
   "license": "MIT",
   "author": "Michal Klinovsky <michal.klinovsky@gmail.com>",
