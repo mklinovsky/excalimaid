@@ -4,8 +4,9 @@ import { exec } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { serveStatic } from "./static-server.js";
 
-const PORT = 17532;
-const IDLE_TIMEOUT_MS = 5 * 60 * 1000;
+const PORT = Number(process.env.EXCALIMAID_PORT) || 17532;
+const IDLE_TIMEOUT_MS =
+  (Number(process.env.EXCALIMAID_IDLE_TIMEOUT) || 5) * 60 * 1000;
 const TIMEOUT_CHECK_INTERVAL_MS = 30 * 1000;
 const DIST_DIR = path.resolve(fileURLToPath(import.meta.url), "../../web");
 

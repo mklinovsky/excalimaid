@@ -58,7 +58,7 @@ Opens a Mermaid diagram in Excalidraw. Supports Flowchart, Sequence, and Class d
 }
 ```
 
-Starts a local HTTP server on port 17532, opens your browser, and returns the URL: `http://localhost:17532/?mermaid=...`
+Starts a local HTTP server on the default port 17532 (configurable via `EXCALIMAID_PORT`), opens your browser, and returns the URL.
 
 The server auto-shuts down after 5 minutes of inactivity.
 
@@ -94,13 +94,27 @@ Configure excalimaid in your MCP client:
 
 Once configured, the `open-diagram` tool will be available to your AI assistant.
 
+## Configuration
+
+| Variable | Description | Default |
+|---|---|---|
+| `EXCALIMAID_PORT` | Port for the local HTTP server | `17532` |
+| `EXCALIMAID_IDLE_TIMEOUT` | Idle timeout in minutes before the server shuts down | `5` |
+
+Example:
+
+```sh
+EXCALIMAID_PORT=8080 excalimaid 'graph TD
+A-->B'
+```
+
 ## How it works
 
 ![How it works](.github/images/chart.png)
 *Made with the tool itself, obviously*
 
 1. The script base64-encodes the Mermaid syntax and passes it as a `?mermaid=` query parameter
-2. It serves the `dist/` directory via a minimal HTTP server on port 17532
+2. It serves the `dist/` directory via a minimal HTTP server on the default port 17532
 3. The React app decodes the parameter and converts it to Excalidraw elements using `@excalidraw/mermaid-to-excalidraw`
 4. The result is rendered in a full-screen Excalidraw canvas
 
